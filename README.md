@@ -1,8 +1,7 @@
 # gsutil
 
 This is a minimal Docker image for running [gsutil] from Docker. For this to
-work, you would ideally create a `.boto` configuration file in the home
-directory of the `gsutil` user, i.e. in `/home/gsutil` in the container and
+work, you would ideally create a `.boto` configuration file in the container and
 arrange for the file to access the secret key of a service account.
 
   [gsutil]: https://cloud.google.com/storage/docs/gsutil
