@@ -51,3 +51,21 @@ default_api_version = 2
 # specifying the -p option to the 'mb' and 'ls' commands.
 default_project_id = <THE STRING ID OF YOUR PROJECT>
 ```
+
+## Release Tempo
+
+The intention for this repository is to follow the [release] tempo for the
+official [gsutil] project. The project will typically pick the latest stable
+[Alpine] image at release time. Generated images are automatically
+[tagged][tags] with the same version number as the [gsutil] [release] number,
+sans the leading `v`.
+
+Missing a release? Open a [PR]!
+
+Releases will be done through creating (git) tags with the same value as the one
+in the `GSUTIL_VERSION` build argument of the [Dockerfile]
+
+  [Alpine]: https://hub.docker.com/_/alpine
+  [tags]: https://hub.docker.com/r/yanzinetworks/gsutil/tags
+  [PR]: https://github.com/YanziNetworks/docker-gsutil/pulls
+  [Dockerfile]: ./Dockerfile
