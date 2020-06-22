@@ -1,12 +1,18 @@
 FROM alpine:3.11.3
 
 LABEL maintainer "Emmanuel Frecon <efrecon+github@gmail.com>"
-ARG GSUTIL_VERSION=4.48
+ARG GSUTIL_VERSION=4.51
+ARG CRC32C_VERSION=1.7
 
-RUN apk add --no-cache python3 curl tar tini && \
+RUN apk add --no-cache python3 curl tar tini python-dev gcc musl-dev && \
+    curl -qLs https://downloads.sourceforge.net/project/crcmod/crcmod/crcmod-${CRC32C_VERSION}/crcmod-${CRC32C_VERSION}.tar.gz | tar -zxf - && \
+    cd crcmod-${CRC32C_VERSION} && \
+    python setup.py install && \
+    cd .. && \
+    rm -rf crcmod-${CRC32C_VERSION} && \
+    curl -qLs https://pub.storage.googleapis.com/gsutil_${GSUTIL_VERSION}.tar.gz | tar -C /opt -zxf - && \
+    apk del --no-cache curl tar gcc && \
     if [ ! -e /usr/bin/python ]; then ln -sf python3 /usr/bin/python ; fi && \
-    curl -qLs https://pub.storage.googleapis.com/gsutil_${GSUTIL_VERSION}.tar.gz | tar -C /opt -zxvf - && \
-    apk del --no-cache curl tar && \
     ln -s /opt/gsutil/gsutil /usr/local/bin/gsutil
 
 ENTRYPOINT [ "/sbin/tini", "--", "/usr/local/bin/gsutil" ]
